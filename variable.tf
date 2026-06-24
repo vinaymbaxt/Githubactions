@@ -19,7 +19,7 @@ variable "ARM_SUBSCRIPTION_ID" {
 variable "ARM_TENANT_ID" {
   description = "Hillrom tenant id"
   type        = string
-  default     = ""
+  default     = "c8c6dd35-871f-4f30-85ac-6535f3982514"
 }
 
 variable "ARM_CLIENT_ID" {

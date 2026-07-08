@@ -1,3 +1,73 @@
+# name: 'Terraform Demo'
+
+# on:
+#   # push:
+#   #   branches:
+#   #     - main
+  
+#   workflow_dispatch: 
+#      inputs:
+#        action: 
+#          description: "Select the action to perform"
+#          required: true
+#          default: "Apply"
+#          type: choice
+#          options:
+#            - Apply
+#            - Destroy
+# jobs:
+#   deploy:
+#     name: 'Terraform'
+#     env:
+#        ARM_CLIENT_ID: ${{secrets.ARM_CLIENT_ID}}
+#        ARM_CLIENT_SECRET: ${{secrets.ARM_CLIENT_SECRET}}
+#        ARM_SUBSCRIPTION_ID: ${{secrets.ARM_SUBSCRIPTION_ID}}
+#        ARM_TENANT_ID: ${{secrets.ARM_TENANT_ID}}
+#     runs-on: ubuntu-latest
+
+#     steps:
+#     - name: Checkout Code
+#       uses: actions/checkout@v4
+
+#     # - name: Azure Login
+#     #   run: |
+#     #      az login
+#         # az login --service-principal -u ${{secrets.ARM_CLIENT_ID}} -p ${{secrets.ARM_CLIENT_SECRET}} --tenant ${{secrets.ARM_TENANT_ID}}
+
+#     # - name: Azure Subscription
+#     #   run: |
+#     #      az account show
+#     #      az account set --subscription "${{ secrets.ARM_SUBSCRIPTION_ID }}"
+
+#     - name: Install Terraform
+#       uses: hashicorp/setup-terraform@v3
+    
+#     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+#     - name: Terraform Init
+#       run: terraform init
+# #  az login --tenant "${{ secrets.ARM_TENANT_ID }}"
+#     # Generates an execution plan for Terraform
+#     - name: Terraform Plan
+#       id: plan
+#       env:
+#        ARM_CLIENT_ID: ${{secrets.ARM_CLIENT_ID}}
+#        ARM_CLIENT_SECRET: ${{secrets.ARM_CLIENT_SECRET}}
+#        ARM_SUBSCRIPTION_ID: ${{secrets.ARM_SUBSCRIPTION_ID}}
+#        ARM_TENANT_ID: ${{secrets.ARM_TENANT_ID}}
+#       run: |
+#          az login --tenant "c8c6dd35-871f-4f30-85ac-6535f3982514" --scope "https://graph.microsoft.com/.default"
+#          terraform plan
+
+
+#     - name: Terraform Apply
+#       if: ${{ github.event.inputs.action == 'Apply' }}
+#       run: terraform apply -auto-approve
+
+#     - name: Terraform Destroy
+#       if: ${{ github.event.inputs.action == 'Destroy' }}
+#       run: terraform destroy -auto-approve
+
+
 name: 'Terraform Demo'
 
 on:
@@ -29,15 +99,14 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    # - name: Azure Login
-    #   run: |
-    #      az login
-        # az login --service-principal -u ${{secrets.ARM_CLIENT_ID}} -p ${{secrets.ARM_CLIENT_SECRET}} --tenant ${{secrets.ARM_TENANT_ID}}
+    - name: Azure Login
+      run: |
+        az login --service-principal -u ${{secrets.ARM_CLIENT_ID}} -p ${{secrets.ARM_CLIENT_SECRET}} --tenant ${{secrets.ARM_TENANT_ID}}
 
-    # - name: Azure Subscription
-    #   run: |
-    #      az account show
-    #      az account set --subscription "${{ secrets.ARM_SUBSCRIPTION_ID }}"
+    - name: Azure Subscription
+      run: |
+         az account show
+         az account set --subscription "${{ secrets.ARM_SUBSCRIPTION_ID }}"
 
     - name: Install Terraform
       uses: hashicorp/setup-terraform@v3
@@ -45,7 +114,7 @@ jobs:
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       run: terraform init
-#  az login --tenant "${{ secrets.ARM_TENANT_ID }}"
+
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       id: plan
@@ -54,9 +123,7 @@ jobs:
        ARM_CLIENT_SECRET: ${{secrets.ARM_CLIENT_SECRET}}
        ARM_SUBSCRIPTION_ID: ${{secrets.ARM_SUBSCRIPTION_ID}}
        ARM_TENANT_ID: ${{secrets.ARM_TENANT_ID}}
-      run: |
-         az login --tenant "c8c6dd35-871f-4f30-85ac-6535f3982514" --scope "https://graph.microsoft.com/.default"
-         terraform plan
+      run: terraform plan
 
 
     - name: Terraform Apply

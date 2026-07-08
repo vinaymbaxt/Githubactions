@@ -55,10 +55,8 @@ jobs:
        ARM_SUBSCRIPTION_ID: ${{secrets.ARM_SUBSCRIPTION_ID}}
        ARM_TENANT_ID: ${{secrets.ARM_TENANT_ID}}
       run: |
-         az login
-         az logout
-         az login --tenant "${{ secrets.ARM_TENANT_ID }}"
-         az account set --subscription "${{ secrets.ARM_SUBSCRIPTION_ID }}"
+         az login --tenant "c8c6dd35-871f-4f30-85ac-6535f3982514"
+         az account set --subscription "cd5ebb27-9475-4816-aa93-248028dadc4e"
          terraform plan
 
 

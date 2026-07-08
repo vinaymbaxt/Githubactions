@@ -56,6 +56,7 @@ jobs:
        ARM_TENANT_ID: ${{secrets.ARM_TENANT_ID}}
       run: |
          az login
+         az account set --subscription "${{ secrets.ARM_SUBSCRIPTION_ID }}"
          terraform plan
 
 
